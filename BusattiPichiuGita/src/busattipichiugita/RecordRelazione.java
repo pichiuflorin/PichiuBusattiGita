@@ -21,7 +21,9 @@ import java.util.ArrayList;
  */
 public class RecordRelazione {
 
-    //AGGIUSTAMENTI
+    // -----------------------------------------------------------------------
+    // Normalizzazione
+    // -----------------------------------------------------------------------
 
     private String aggiustaID(String s) {
         String aggiustata = s;

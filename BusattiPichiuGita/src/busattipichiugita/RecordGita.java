@@ -19,9 +19,9 @@ public class RecordGita {
     quindi ogni record occupa (2+20+20)*2 = 84 byte
     */
     public static final int DIM_RECORD = 84;
-    
+
     //AGGIUSTAMENTI
-    
+
     private String aggiustaID(String s) {
         String aggiustata = s;
         if (s.length() < 2) {
@@ -195,7 +195,7 @@ public class RecordGita {
                 for (int i = 0; i < 2; i++) {
                     idLetto += file.readChar();
                 }
-                
+
                 if (idLetto.equals(idCercato)) {
                     posizioneTrovata = recordAttuale;
                     break;
