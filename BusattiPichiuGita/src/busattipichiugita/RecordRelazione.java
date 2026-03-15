@@ -8,23 +8,15 @@ import java.io.*;
 import java.util.ArrayList;
 
 /**
- * Gestisce la relazione MOLTI-A-MOLTI tra Studente e Gita
- * tramite FILE SEQUENZIALE (DataInputStream / DataOutputStream).
- *
- * La lettura avviene sempre dall'inizio alla fine senza seek.
- * Ogni record è composto da due stringhe di 2 char (idStudente, idGita).
- *
- * -)idStudente stringa lunga 2
- * -)idGita stringa lunga 2
  *
  * @author Busatti Mattia e Pichiu Florin
  */
 public class RecordRelazione {
-
-    // -----------------------------------------------------------------------
-    // Normalizzazione
-    // -----------------------------------------------------------------------
-
+    /*
+     * -)idStudente stringa lunga 2
+     * -)idGita stringa lunga 2
+     *
+    */
     private String aggiustaID(String s) {
         String aggiustata = s;
         if (s.length() < 2) {
@@ -38,8 +30,6 @@ public class RecordRelazione {
         }
         return s;
     }
-
-    //SCRITTURA
 
     /**
      * Aggiunge una relazione studente-gita in fondo al file relazioni.dat.
@@ -118,8 +108,6 @@ public class RecordRelazione {
         }
     }
 
-    //LETTURA
-
     /**
      * Restituisce la lista degli id delle gite a cui partecipa uno studente.
      */
@@ -171,8 +159,6 @@ public class RecordRelazione {
     public int contaRecord() {
         return leggiTutteRelazioni().size();
     }
-    
-    //METODI PRIVATI (da togliere)
 
     /**
      * Legge sequenzialmente tutto il file e restituisce una lista di coppie

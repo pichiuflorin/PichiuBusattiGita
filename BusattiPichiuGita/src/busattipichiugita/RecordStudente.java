@@ -21,8 +21,6 @@ public class RecordStudente {
     */
     public static final int DIM_RECORD = 96;
     
-    //AGGIUSTAMENTI
-    
     private String aggiustaID(String s) {
         String aggiustata = s;
         if (s.length() < 2) {
@@ -64,8 +62,6 @@ public class RecordStudente {
         }
         return s;
     }
-    
-    //SCRITTURA
     
     /**
      * Aggiunge uno studente in fondo al file studenti.dat.
@@ -110,8 +106,6 @@ public class RecordStudente {
             System.out.println("Problema in lettura-scrittura file studenti.dat");
         }
     }
-
-    //LETTURA
 
     /**
      * Legge il record alla posizione indicata.

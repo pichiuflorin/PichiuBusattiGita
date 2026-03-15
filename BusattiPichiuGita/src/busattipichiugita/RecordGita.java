@@ -20,8 +20,6 @@ public class RecordGita {
     */
     public static final int DIM_RECORD = 84;
 
-    //AGGIUSTAMENTI
-
     private String aggiustaID(String s) {
         String aggiustata = s;
         if (s.length() < 2) {
@@ -49,8 +47,6 @@ public class RecordGita {
         }
         return s;
     }
-
-    //SCRITTURA
 
     /**
      * Aggiunge una gita in fondo al file gite.dat.
@@ -93,8 +89,6 @@ public class RecordGita {
             System.out.println("Problema in lettura-scrittura file gite.dat");
         }
     }
-
-    //LETTURA
 
     /**
      * Legge il record alla posizione indicata.
