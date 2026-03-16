@@ -252,7 +252,6 @@ public class GitaFrm extends javax.swing.JPanel {
         }
         String idGita = voceGita.substring(0, 2).trim();
         String idStudente = voceStudente.substring(0, 2).trim();
-        RecordRelazione rr = new RecordRelazione();
         if (rr.esisteRelazione(idStudente, idGita)) {
             javax.swing.JOptionPane.showMessageDialog(this, "Relazione già esistente.");
             return;
@@ -306,14 +305,14 @@ public class GitaFrm extends javax.swing.JPanel {
 
         cmbGita.removeAllItems();
         for (Gita g : rg.leggiTutte()) {
-            if (!g.getNome().equals("***ELIMINATA***")) {
+            if (!g.getNome().equals("ELIMINATA")) {
                 cmbGita.addItem(g.getId() + " - " + g.getNome());
             }
         }
 
         cmbStudente.removeAllItems();
         for (Studente s : rs.leggiTutti()) {
-            if (!s.getNome().equals("***ELIMINATO***")) {
+            if (!s.getNome().equals("ELIMINATO")) {
                 cmbStudente.addItem(s.getId() + " - " + s.getNome() + " " + s.getCognome());
             }
         }

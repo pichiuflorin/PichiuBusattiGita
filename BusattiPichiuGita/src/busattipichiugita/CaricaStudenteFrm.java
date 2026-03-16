@@ -231,7 +231,7 @@ public class CaricaStudenteFrm extends javax.swing.JFrame {
         for (String idGita : rr.getGiteStudente(id)) {
             rr.eliminaRecord(id, idGita);
         }
-        rs.scriviRecordInPosizione(new Studente("00", "***ELIMINATO***", "***", "***"), rs.cercaPerID(id));
+        rs.scriviRecordInPosizione(new Studente("00", "ELIMINATO", "ELIMINATO", "ELIM"), rs.cercaPerID(id));
         txtID.setText("");
         aggiornaLista();
     }//GEN-LAST:event_btnRimuoviActionPerformed
@@ -267,7 +267,7 @@ public class CaricaStudenteFrm extends javax.swing.JFrame {
         txtStudenti.append(String.format("%-5s %-15s %-15s %-8s%n", "ID", "NOME", "COGNOME", "CLASSE"));
         txtStudenti.append("-".repeat(45) + "\n");
         for (Studente s : rs.leggiTutti()) {
-            if (!s.getNome().equals("***ELIMINATO***")) {
+            if (!s.getNome().equals("ELIMINATO")) {
                 txtStudenti.append(String.format("%-5s %-15s %-15s %-8s%n",
                         s.getId(), s.getNome(), s.getCognome(), s.getClasse()));
             }
