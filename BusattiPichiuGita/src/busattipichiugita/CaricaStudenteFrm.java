@@ -262,7 +262,6 @@ public class CaricaStudenteFrm extends javax.swing.JFrame {
     }
 
     private void aggiornaLista() {
-        RecordStudente rs = new RecordStudente();
         txtStudenti.setText("");
         txtStudenti.append(String.format("%-5s %-15s %-15s %-8s%n", "ID", "NOME", "COGNOME", "CLASSE"));
         txtStudenti.append("-".repeat(45) + "\n");

@@ -175,7 +175,6 @@ public class CaricaGitaFrm extends javax.swing.JFrame {
     }//GEN-LAST:event_txtIDActionPerformed
 
     private void btnRimuoviActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRimuoviActionPerformed
-        RecordGita rg = new RecordGita();
         String id = txtID.getText().trim();
         if (id.isEmpty()) {
             javax.swing.JOptionPane.showMessageDialog(this, "Inserisci l'ID da rimuovere.");
@@ -186,7 +185,6 @@ public class CaricaGitaFrm extends javax.swing.JFrame {
             javax.swing.JOptionPane.showMessageDialog(this, "Gita non trovata.");
             return;
         }
-        RecordRelazione rr = new RecordRelazione();
         for (String idStudente : rr.getStudentiGita(id)) {
             rr.eliminaRecord(idStudente, id);
         }
@@ -200,7 +198,6 @@ public class CaricaGitaFrm extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNomeActionPerformed
 
     private void btnAggiungiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAggiungiActionPerformed
-        RecordGita rg = new RecordGita();
         String id = txtID.getText().trim();
         String nome = txtNome.getText().trim();
         String dest = txtDestinazione.getText().trim();
@@ -245,12 +242,11 @@ public class CaricaGitaFrm extends javax.swing.JFrame {
     }
 
     private void aggiornaLista() {
-        RecordGita rg = new RecordGita();
         txtGite.setText("");
         txtGite.append(String.format("%-5s %-20s %-20s%n", "ID", "NOME", "DESTINAZIONE"));
         txtGite.append("-".repeat(45) + "\n");
         for (Gita g : rg.leggiTutte()) {
-            if (!g.getNome().equals("***ELIMINATA***")) {
+            if (!g.getNome().equals("ELIMINATA")) {
                 txtGite.append(String.format("%-5s %-20s %-20s%n",
                         g.getId(), g.getNome(), g.getDestinazione()));
             }

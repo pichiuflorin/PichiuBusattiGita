@@ -325,7 +325,7 @@ public class GitaFrm extends javax.swing.JPanel {
                 = (javax.swing.table.DefaultTableModel) tableRelazioni.getModel();
         modello.setRowCount(0);
         for (Studente s : rs.leggiTutti()) {
-            if (s.getNome().equals("***ELIMINATO***")) {
+            if (s.getNome().equals("ELIMINATO")) {
                 continue;
             }
             for (String idGita : rr.getGiteStudente(s.getId())) {
