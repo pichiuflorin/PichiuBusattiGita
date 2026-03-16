@@ -245,7 +245,6 @@ public class GitaFrm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnMostraGiteActionPerformed
 
     private void btnAggiungiRelazioneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAggiungiRelazioneActionPerformed
-        caricaCombos();
         String voceGita = (String) cmbGita.getSelectedItem();
         String voceStudente = (String) cmbStudente.getSelectedItem();
         if (voceGita == null || voceStudente == null) {
@@ -253,12 +252,14 @@ public class GitaFrm extends javax.swing.JPanel {
         }
         String idGita = voceGita.substring(0, 2).trim();
         String idStudente = voceStudente.substring(0, 2).trim();
+        RecordRelazione rr = new RecordRelazione();
         if (rr.esisteRelazione(idStudente, idGita)) {
             javax.swing.JOptionPane.showMessageDialog(this, "Relazione già esistente.");
             return;
         }
         rr.scriviRecord(idStudente, idGita);
         aggiornaTabella(idGita);
+        caricaCombos();
     }//GEN-LAST:event_btnAggiungiRelazioneActionPerformed
 
     private void btnRimuoviRelazioneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRimuoviRelazioneActionPerformed

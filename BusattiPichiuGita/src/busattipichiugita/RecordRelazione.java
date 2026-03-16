@@ -31,17 +31,12 @@ public class RecordRelazione {
         return s;
     }
 
-    /**
-     * Aggiunge una relazione studente-gita in fondo al file relazioni.dat.
-     * Se la coppia esiste già, non viene duplicata.
-     * Usa FileOutputStream in modalità append (true) per non sovrascrivere.
-     */
     public void scriviRecord(String idStudente, String idGita) {
         if (esisteRelazione(idStudente, idGita)) {
             return;
         }
         try {
-            // append = true → aggiunge in fondo senza cancellare il contenuto precedente
+         
             DataOutputStream dos = new DataOutputStream(new FileOutputStream("relazioni.dat", true));
 
             String idS = aggiustaID(idStudente);
@@ -62,11 +57,6 @@ public class RecordRelazione {
         }
     }
 
-    /**
-     * Elimina la relazione tra uno studente e una gita.
-     * Poiche' il file e' sequenziale, legge tutti i record in memoria,
-     * rimuove la coppia cercata e riscrive l'intero file da capo.
-     */
     public void eliminaRecord(String idStudente, String idGita) {
         String idSCercato = aggiustaID(idStudente);
         String idGCercato = aggiustaID(idGita);
@@ -87,7 +77,6 @@ public class RecordRelazione {
             return;
         }
 
-        // append = false → sovrascrive il file dall'inizio con i record rimasti
         try {
             DataOutputStream dos = new DataOutputStream(new FileOutputStream("relazioni.dat", false));
 
@@ -153,23 +142,16 @@ public class RecordRelazione {
         return false;
     }
 
-    /**
-     * Restituisce il numero totale di relazioni nel file.
-     */
     public int contaRecord() {
         return leggiTutteRelazioni().size();
     }
 
-    /**
-     * Legge sequenzialmente tutto il file e restituisce una lista di coppie
-     * {idStudente, idGita}. E' il metodo base su cui si appoggiano tutti gli altri.
-     */
     private ArrayList<String[]> leggiTutteRelazioni() {
         ArrayList<String[]> lista = new ArrayList<>();
         try {
             DataInputStream dis = new DataInputStream(new FileInputStream("relazioni.dat"));
 
-            // Leggo finche' non finisco il file (EOFException = fine file raggiunta)
+         
             while (true) {
                 String idS = "";
                 for (int i = 0; i < 2; i++) {
@@ -183,9 +165,7 @@ public class RecordRelazione {
             }
 
         } catch (EOFException ex) {
-            // Fine file raggiunta: e' normale, esco dal ciclo
         } catch (FileNotFoundException ex) {
-            // Il file non esiste ancora: nessuna relazione presente
         } catch (IOException ex) {
             System.out.println("Problema in lettura file relazioni.dat");
         }
