@@ -14,7 +14,12 @@ public class BusattiPichiuGita {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        //TODO
+        javax.swing.JFrame frame = new javax.swing.JFrame();
+        frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+        frame.add(new GitaFrm());
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
-    
+
 }

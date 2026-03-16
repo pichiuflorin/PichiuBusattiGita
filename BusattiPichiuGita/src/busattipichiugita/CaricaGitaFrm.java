@@ -9,14 +9,19 @@ package busattipichiugita;
  * @author busatti.mattia
  */
 public class CaricaGitaFrm extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CaricaGitaFrm.class.getName());
+
+    private RecordGita rg = new RecordGita();
+    private RecordRelazione rr = new RecordRelazione();
 
     /**
      * Creates new form CaricaGitaFrm
      */
     public CaricaGitaFrm() {
         initComponents();
+        aggiornaLista();
+        setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE); //Per rimanere aperto senza che si chiuda tutto
     }
 
     /**
@@ -29,116 +34,190 @@ public class CaricaGitaFrm extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        txtId = new javax.swing.JTextField();
-        txtNome = new javax.swing.JTextField();
+        lblDestinazione = new javax.swing.JLabel();
         txtDestinazione = new javax.swing.JTextField();
-        btnAggiungi = new javax.swing.JButton();
+        lblNome = new javax.swing.JLabel();
+        txtID = new javax.swing.JTextField();
+        lblID = new javax.swing.JLabel();
         btnRimuovi = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtGite = new javax.swing.JTextArea();
+        txtNome = new javax.swing.JTextField();
+        btnAggiungi = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel1.setText("AGGIUNGI UNA GITA ALL'ELENCO");
+        jLabel1.setText("GESTIONE GITE");
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(153, 0, 153));
-        jLabel2.setText("ID");
+        lblDestinazione.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblDestinazione.setForeground(new java.awt.Color(0, 51, 204));
+        lblDestinazione.setText("DESTINAZIONE");
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(153, 0, 153));
-        jLabel3.setText("NOME");
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(153, 0, 153));
-        jLabel4.setText("DESTINAZIONE");
-
-        txtId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtIdActionPerformed(evt);
-            }
-        });
-
+        txtDestinazione.setName("txtDestinazione"); // NOI18N
         txtDestinazione.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDestinazioneActionPerformed(evt);
             }
         });
 
-        btnAggiungi.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnAggiungi.setForeground(new java.awt.Color(0, 204, 204));
-        btnAggiungi.setText("AGGIUNGI STUDENTE");
+        lblNome.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblNome.setForeground(new java.awt.Color(0, 0, 204));
+        lblNome.setText("NOME");
 
-        btnRimuovi.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnRimuovi.setForeground(new java.awt.Color(0, 204, 204));
-        btnRimuovi.setText("RIMUOVI STUDENTE");
+        txtID.setName("txtClasse"); // NOI18N
+        txtID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIDActionPerformed(evt);
+            }
+        });
+
+        lblID.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblID.setForeground(new java.awt.Color(0, 0, 204));
+        lblID.setText("ID");
+
+        btnRimuovi.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnRimuovi.setForeground(new java.awt.Color(255, 0, 0));
+        btnRimuovi.setText("RIMUOVI");
+        btnRimuovi.setName("btnRimuovi"); // NOI18N
+        btnRimuovi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRimuoviActionPerformed(evt);
+            }
+        });
+
+        txtGite.setColumns(20);
+        txtGite.setRows(5);
+        jScrollPane1.setViewportView(txtGite);
+
+        txtNome.setName("txtCognome"); // NOI18N
+        txtNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNomeActionPerformed(evt);
+            }
+        });
+
+        btnAggiungi.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnAggiungi.setForeground(new java.awt.Color(255, 0, 0));
+        btnAggiungi.setText("AGGIUNGI");
+        btnAggiungi.setName("btnAggiungi"); // NOI18N
+        btnAggiungi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAggiungiActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtDestinazione, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblDestinazione, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtID, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblID, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblNome, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(45, 45, 45))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(90, 90, 90)
-                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtDestinazione, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(126, 126, 126)
-                                .addComponent(jLabel3)
-                                .addGap(130, 130, 130)
-                                .addComponent(jLabel4))
-                            .addComponent(jLabel1))))
-                .addGap(25, 25, 25))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(51, 51, 51)
-                .addComponent(btnAggiungi)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
-                .addComponent(btnRimuovi)
-                .addGap(64, 64, 64))
+                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnRimuovi, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAggiungi, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(26, 26, 26)
                 .addComponent(jLabel1)
-                .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addGap(37, 37, 37)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDestinazione, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAggiungi)
-                    .addComponent(btnRimuovi))
-                .addGap(70, 70, 70))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lblID)
+                        .addGap(12, 12, 12)
+                        .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblNome)
+                        .addGap(14, 14, 14)
+                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblDestinazione)
+                        .addGap(6, 6, 6)
+                        .addComponent(txtDestinazione, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39)
+                        .addComponent(btnAggiungi, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnRimuovi, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(9, 9, 9))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtIdActionPerformed
-
     private void txtDestinazioneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDestinazioneActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDestinazioneActionPerformed
+
+    private void txtIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIDActionPerformed
+
+    private void btnRimuoviActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRimuoviActionPerformed
+        RecordGita rg = new RecordGita();
+        String id = txtID.getText().trim();
+        if (id.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Inserisci l'ID da rimuovere.");
+            return;
+        }
+        int pos = rg.cercaPerID(id);
+        if (pos == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Gita non trovata.");
+            return;
+        }
+        RecordRelazione rr = new RecordRelazione();
+        for (String idStudente : rr.getStudentiGita(id)) {
+            rr.eliminaRecord(idStudente, id);
+        }
+        rg.scriviRecordInPosizione(new Gita("00", "***ELIMINATA***", "***"), pos);
+        txtID.setText("");
+        aggiornaLista();
+    }//GEN-LAST:event_btnRimuoviActionPerformed
+
+    private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNomeActionPerformed
+
+    private void btnAggiungiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAggiungiActionPerformed
+        RecordGita rg = new RecordGita();
+        String id = txtID.getText().trim();
+        String nome = txtNome.getText().trim();
+        String dest = txtDestinazione.getText().trim();
+        if (id.isEmpty() || nome.isEmpty() || dest.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Compila tutti i campi.");
+            return;
+        }
+        if (rg.cercaPerID(id) != -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "ID già esistente.");
+            return;
+        }
+        rg.scriviRecord(new Gita(id, nome, dest));
+        txtID.setText("");
+        txtNome.setText("");
+        txtDestinazione.setText("");
+        aggiornaLista();
+    }//GEN-LAST:event_btnAggiungiActionPerformed
 
     /**
      * @param args the command line arguments
@@ -165,15 +244,30 @@ public class CaricaGitaFrm extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> new CaricaGitaFrm().setVisible(true));
     }
 
+    private void aggiornaLista() {
+        RecordGita rg = new RecordGita();
+        txtGite.setText("");
+        txtGite.append(String.format("%-5s %-20s %-20s%n", "ID", "NOME", "DESTINAZIONE"));
+        txtGite.append("-".repeat(45) + "\n");
+        for (Gita g : rg.leggiTutte()) {
+            if (!g.getNome().equals("***ELIMINATA***")) {
+                txtGite.append(String.format("%-5s %-20s %-20s%n",
+                        g.getId(), g.getNome(), g.getDestinazione()));
+            }
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAggiungi;
     private javax.swing.JButton btnRimuovi;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblDestinazione;
+    private javax.swing.JLabel lblID;
+    private javax.swing.JLabel lblNome;
     private javax.swing.JTextField txtDestinazione;
-    private javax.swing.JTextField txtId;
+    private javax.swing.JTextArea txtGite;
+    private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtNome;
     // End of variables declaration//GEN-END:variables
 }

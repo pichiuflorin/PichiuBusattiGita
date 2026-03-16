@@ -10,11 +10,35 @@ package busattipichiugita;
  */
 public class GitaFrm extends javax.swing.JPanel {
 
+    //per delimitare quando il combo si aggiorna
+    //e quando invece ha finito, cosa che permette agli
+    //eventi dell'utente di essere validi per un aggiornamento
+    private RecordGita rg = new RecordGita();
+    private RecordStudente rs = new RecordStudente();
+    private RecordRelazione rr = new RecordRelazione();
+    private boolean caricamento = false;
+
     /**
      * Creates new form GitaFrm
      */
     public GitaFrm() {
         initComponents();
+        caricaCombos();
+        aggiornaTabella(null);
+
+        //per far in modo che le comboBox si aggiornino ogni volta che
+        //avviene un cambiamento negli altri due frm
+        addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent e) {
+                caricaCombos();
+            }
+
+            public void ancestorRemoved(javax.swing.event.AncestorEvent e) {
+            }
+
+            public void ancestorMoved(javax.swing.event.AncestorEvent e) {
+            }
+        });
     }
 
     /**
@@ -27,43 +51,116 @@ public class GitaFrm extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollBar1 = new javax.swing.JScrollBar();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtDatiPartecipanti = new javax.swing.JTextArea();
-        jLabel1 = new javax.swing.JLabel();
-        cmbBando = new javax.swing.JComboBox<>();
-        jLabel2 = new javax.swing.JLabel();
+        lblMenu = new javax.swing.JLabel();
+        cmbGita = new javax.swing.JComboBox<>();
+        lblGita = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        btnAggiungiPartecipanti = new javax.swing.JButton();
+        btnMostraStudenti = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tableRelazioni = new javax.swing.JTable();
+        btnMostraGite = new javax.swing.JButton();
+        btnAggiungiRelazione = new javax.swing.JButton();
+        btnRimuoviRelazione = new javax.swing.JButton();
+        lblStudente = new javax.swing.JLabel();
+        cmbStudente = new javax.swing.JComboBox<>();
+        btnMostraTutto = new javax.swing.JButton();
 
-        txtDatiPartecipanti.setColumns(20);
-        txtDatiPartecipanti.setRows(5);
-        txtDatiPartecipanti.setName("lblVisualizza"); // NOI18N
-        jScrollPane1.setViewportView(txtDatiPartecipanti);
+        lblMenu.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        lblMenu.setForeground(new java.awt.Color(255, 0, 0));
+        lblMenu.setText("Menu");
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel1.setText("VISUALIZZA PARTECIPANTI");
+        cmbGita.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        cmbGita.setForeground(new java.awt.Color(51, 255, 102));
+        cmbGita.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbGita.setName("cmbSelezionaBando"); // NOI18N
+        cmbGita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbGitaActionPerformed(evt);
+            }
+        });
 
-        cmbBando.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        cmbBando.setForeground(new java.awt.Color(51, 255, 102));
-        cmbBando.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cmbBando.setName("cmbSelezionaBando"); // NOI18N
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 255));
-        jLabel2.setText("SELEZIONA BANDO GITA");
+        lblGita.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblGita.setForeground(new java.awt.Color(0, 0, 255));
+        lblGita.setText("SELEZIONA GITA");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 255));
         jLabel3.setText("DATI");
 
-        btnAggiungiPartecipanti.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        btnAggiungiPartecipanti.setForeground(new java.awt.Color(204, 0, 204));
-        btnAggiungiPartecipanti.setText("AGGIUNGI PARTECIPANTI");
-        btnAggiungiPartecipanti.setName("btnAggiungi"); // NOI18N
-        btnAggiungiPartecipanti.addActionListener(new java.awt.event.ActionListener() {
+        btnMostraStudenti.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btnMostraStudenti.setForeground(new java.awt.Color(204, 0, 204));
+        btnMostraStudenti.setText("MOSTRA STUDENTI");
+        btnMostraStudenti.setName("btnAggiungi"); // NOI18N
+        btnMostraStudenti.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAggiungiPartecipantiActionPerformed(evt);
+                btnMostraStudentiActionPerformed(evt);
+            }
+        });
+
+        tableRelazioni.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "ID", "Nome", "Cognome", "Classe", "Gita"
+            }
+        ));
+        jScrollPane2.setViewportView(tableRelazioni);
+
+        btnMostraGite.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btnMostraGite.setForeground(new java.awt.Color(204, 0, 204));
+        btnMostraGite.setText("MOSTRA GITE");
+        btnMostraGite.setName("btnAggiungi"); // NOI18N
+        btnMostraGite.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMostraGiteActionPerformed(evt);
+            }
+        });
+
+        btnAggiungiRelazione.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btnAggiungiRelazione.setForeground(new java.awt.Color(102, 153, 255));
+        btnAggiungiRelazione.setText("AGGIUNGI RELAZIONE");
+        btnAggiungiRelazione.setName("btnAggiungi"); // NOI18N
+        btnAggiungiRelazione.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAggiungiRelazioneActionPerformed(evt);
+            }
+        });
+
+        btnRimuoviRelazione.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btnRimuoviRelazione.setForeground(new java.awt.Color(102, 153, 255));
+        btnRimuoviRelazione.setText("RIMUOVI RELAZIONE");
+        btnRimuoviRelazione.setName("btnAggiungi"); // NOI18N
+        btnRimuoviRelazione.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRimuoviRelazioneActionPerformed(evt);
+            }
+        });
+
+        lblStudente.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblStudente.setForeground(new java.awt.Color(0, 0, 255));
+        lblStudente.setText("SELEZIONA STUDENTE");
+
+        cmbStudente.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        cmbStudente.setForeground(new java.awt.Color(51, 255, 102));
+        cmbStudente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbStudente.setName("cmbSelezionaBando"); // NOI18N
+        cmbStudente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbStudenteActionPerformed(evt);
+            }
+        });
+
+        btnMostraTutto.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btnMostraTutto.setForeground(new java.awt.Color(255, 102, 102));
+        btnMostraTutto.setText("MOSTRA TUTTO");
+        btnMostraTutto.setName("btnAggiungi"); // NOI18N
+        btnMostraTutto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMostraTuttoActionPerformed(evt);
             }
         });
 
@@ -72,57 +169,190 @@ public class GitaFrm extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(108, 108, 108)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(98, 98, 98))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(330, 330, 330))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(48, 48, 48)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cmbBando, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnAggiungiPartecipanti, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(73, 73, 73))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(60, 60, 60))))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(cmbGita, 0, 234, Short.MAX_VALUE)
+                    .addComponent(cmbStudente, 0, 234, Short.MAX_VALUE)
+                    .addComponent(lblStudente)
+                    .addComponent(lblGita)
+                    .addComponent(btnAggiungiRelazione, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
+                    .addComponent(btnRimuoviRelazione, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
+                    .addComponent(btnMostraStudenti, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
+                    .addComponent(btnMostraGite, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
+                    .addComponent(btnMostraTutto, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE))
+                .addGap(46, 46, 46))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addGap(34, 34, 34)
+                .addGap(16, 16, 16)
+                .addComponent(lblMenu)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
+                    .addComponent(lblGita)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(cmbBando, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(176, 176, 176)
-                        .addComponent(btnAggiungiPartecipanti, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(83, Short.MAX_VALUE))
+                        .addComponent(cmbGita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblStudente)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cmbStudente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAggiungiRelazione)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnRimuoviRelazione)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnMostraStudenti)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnMostraGite)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnMostraTutto))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAggiungiPartecipantiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAggiungiPartecipantiActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAggiungiPartecipantiActionPerformed
+    private void btnMostraStudentiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostraStudentiActionPerformed
+        CaricaStudenteFrm frm = new CaricaStudenteFrm();
+        frm.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent e) {
+                caricaCombos();
+                aggiornaTabella(null);
+            }
+        });
+        frm.setVisible(true);
+    }//GEN-LAST:event_btnMostraStudentiActionPerformed
 
+    private void btnMostraGiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostraGiteActionPerformed
+        CaricaGitaFrm frm = new CaricaGitaFrm();
+        frm.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent e) {
+                caricaCombos();
+                aggiornaTabella(null);
+            }
+        });
+        frm.setVisible(true);
+    }//GEN-LAST:event_btnMostraGiteActionPerformed
+
+    private void btnAggiungiRelazioneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAggiungiRelazioneActionPerformed
+        caricaCombos();
+        String voceGita = (String) cmbGita.getSelectedItem();
+        String voceStudente = (String) cmbStudente.getSelectedItem();
+        if (voceGita == null || voceStudente == null) {
+            return;
+        }
+        String idGita = voceGita.substring(0, 2).trim();
+        String idStudente = voceStudente.substring(0, 2).trim();
+        if (rr.esisteRelazione(idStudente, idGita)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Relazione già esistente.");
+            return;
+        }
+        rr.scriviRecord(idStudente, idGita);
+        aggiornaTabella(idGita);
+    }//GEN-LAST:event_btnAggiungiRelazioneActionPerformed
+
+    private void btnRimuoviRelazioneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRimuoviRelazioneActionPerformed
+        String voceGita = (String) cmbGita.getSelectedItem();
+        String voceStudente = (String) cmbStudente.getSelectedItem();
+        if (voceGita == null || voceStudente == null) {
+            return;
+        }
+        String idGita = voceGita.substring(0, 2).trim();
+        String idStudente = voceStudente.substring(0, 2).trim();
+        if (!rr.esisteRelazione(idStudente, idGita)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Relazione non trovata.");
+            return;
+        }
+        rr.eliminaRecord(idStudente, idGita);
+        aggiornaTabella(idGita);
+    }//GEN-LAST:event_btnRimuoviRelazioneActionPerformed
+
+    private void cmbGitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbGitaActionPerformed
+        if (caricamento) {
+            return;
+        }
+        String voce = (String) cmbGita.getSelectedItem();
+        if (voce == null || voce.isEmpty()) {
+            return;
+        }
+        String idGita = voce.substring(0, 2).trim();
+        aggiornaTabella(idGita);
+    }//GEN-LAST:event_cmbGitaActionPerformed
+
+    private void cmbStudenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbStudenteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbStudenteActionPerformed
+
+    private void btnMostraTuttoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostraTuttoActionPerformed
+        caricamento = true;
+        cmbGita.setSelectedIndex(0);
+        caricamento = false;
+        aggiornaTabella(null);
+    }//GEN-LAST:event_btnMostraTuttoActionPerformed
+
+    private void caricaCombos() {
+        caricamento = true;
+
+        cmbGita.removeAllItems();
+        for (Gita g : rg.leggiTutte()) {
+            if (!g.getNome().equals("***ELIMINATA***")) {
+                cmbGita.addItem(g.getId() + " - " + g.getNome());
+            }
+        }
+
+        cmbStudente.removeAllItems();
+        for (Studente s : rs.leggiTutti()) {
+            if (!s.getNome().equals("***ELIMINATO***")) {
+                cmbStudente.addItem(s.getId() + " - " + s.getNome() + " " + s.getCognome());
+            }
+        }
+
+        caricamento = false;
+    }
+
+    private void aggiornaTabella(String idGitaFiltro) {
+        javax.swing.table.DefaultTableModel modello
+                = (javax.swing.table.DefaultTableModel) tableRelazioni.getModel();
+        modello.setRowCount(0);
+        for (Studente s : rs.leggiTutti()) {
+            if (s.getNome().equals("***ELIMINATO***")) {
+                continue;
+            }
+            for (String idGita : rr.getGiteStudente(s.getId())) {
+                if (idGitaFiltro != null && !idGita.equals(idGitaFiltro)) {
+                    continue;
+                }
+                int pos = rg.cercaPerID(idGita);
+                String nomeGita = (pos != -1) ? idGita + " - " + rg.leggiRecord(pos).getNome() : idGita;
+                modello.addRow(new Object[]{s.getId(), s.getNome(), s.getCognome(), s.getClasse(), nomeGita});
+            }
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAggiungiPartecipanti;
-    private javax.swing.JComboBox<String> cmbBando;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton btnAggiungiRelazione;
+    private javax.swing.JButton btnMostraGite;
+    private javax.swing.JButton btnMostraStudenti;
+    private javax.swing.JButton btnMostraTutto;
+    private javax.swing.JButton btnRimuoviRelazione;
+    private javax.swing.JComboBox<String> cmbGita;
+    private javax.swing.JComboBox<String> cmbStudente;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollBar jScrollBar1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea txtDatiPartecipanti;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblGita;
+    private javax.swing.JLabel lblMenu;
+    private javax.swing.JLabel lblStudente;
+    private javax.swing.JTable tableRelazioni;
     // End of variables declaration//GEN-END:variables
 }
