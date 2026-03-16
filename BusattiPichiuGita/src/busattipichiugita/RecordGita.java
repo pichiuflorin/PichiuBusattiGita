@@ -48,9 +48,6 @@ public class RecordGita {
         return s;
     }
 
-    /**
-     * Aggiunge una gita in fondo al file gite.dat.
-     */
     public void scriviRecord(Gita g) {
         try {
             RandomAccessFile file = new RandomAccessFile("gite.dat", "rw");
@@ -69,10 +66,6 @@ public class RecordGita {
         }
     }
 
-    /**
-     * Sovrascrive il record alla posizione indicata.
-     * Utile per modificare una gita esistente.
-     */
     public void scriviRecordInPosizione(Gita g, int posizione) {
         try {
             RandomAccessFile file = new RandomAccessFile("gite.dat", "rw");
@@ -90,10 +83,6 @@ public class RecordGita {
         }
     }
 
-    /**
-     * Legge il record alla posizione indicata.
-     * Restituisce null se la posizione è fuori range.
-     */
     public Gita leggiRecord(int posizione) {
         Gita g = null;
         try {
@@ -131,9 +120,6 @@ public class RecordGita {
         return g;
     }
 
-    /**
-     * Restituisce tutte le gite presenti nel file.
-     */
     public ArrayList<Gita> leggiTutte() {
         ArrayList<Gita> lista = new ArrayList<>();
         try {
@@ -171,10 +157,6 @@ public class RecordGita {
         return lista;
     }
 
-    /**
-     * Cerca una gita per id.
-     * Restituisce la posizione logica del record, oppure -1 se non trovata.
-     */
     public int cercaPerID(String id) {
         int posizioneTrovata = -1;
         String idCercato = aggiustaID(id);
@@ -204,9 +186,6 @@ public class RecordGita {
         return posizioneTrovata;
     }
 
-    /**
-     * Restituisce il numero totale di record nel file.
-     */
     public int contaRecord() {
         int nRecord = 0;
         try {

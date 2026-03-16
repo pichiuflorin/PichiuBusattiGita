@@ -97,9 +97,6 @@ public class RecordRelazione {
         }
     }
 
-    /**
-     * Restituisce la lista degli id delle gite a cui partecipa uno studente.
-     */
     public ArrayList<String> getGiteStudente(String idStudente) {
         ArrayList<String> gite = new ArrayList<>();
         String idSCercato = aggiustaID(idStudente);
@@ -112,9 +109,6 @@ public class RecordRelazione {
         return gite;
     }
 
-    /**
-     * Restituisce la lista degli id degli studenti iscritti a una gita.
-     */
     public ArrayList<String> getStudentiGita(String idGita) {
         ArrayList<String> studenti = new ArrayList<>();
         String idGCercato = aggiustaID(idGita);
@@ -127,9 +121,6 @@ public class RecordRelazione {
         return studenti;
     }
 
-    /**
-     * Controlla se esiste gia' una relazione tra uno studente e una gita.
-     */
     public boolean esisteRelazione(String idStudente, String idGita) {
         String idSCercato = aggiustaID(idStudente);
         String idGCercato = aggiustaID(idGita);

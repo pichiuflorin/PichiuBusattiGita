@@ -63,9 +63,6 @@ public class RecordStudente {
         return s;
     }
     
-    /**
-     * Aggiunge uno studente in fondo al file studenti.dat.
-     */
     public void scriviRecord(Studente s) {
         try {
             RandomAccessFile file = new RandomAccessFile("studenti.dat", "rw");
@@ -85,10 +82,6 @@ public class RecordStudente {
         }
     }
 
-    /**
-     * Sovrascrive il record alla posizione indicata.
-     * Si può modificare anche uno studente che già esiste.
-     */
     public void scriviRecordInPosizione(Studente s, int posizione) {
         try {
             RandomAccessFile file = new RandomAccessFile("studenti.dat", "rw");
@@ -107,10 +100,6 @@ public class RecordStudente {
         }
     }
 
-    /**
-     * Legge il record alla posizione indicata.
-     * Restituisce null se la posizione è fuori range.
-     */
     public Studente leggiRecord(int posizione) {
         Studente s = null;
         try {
@@ -153,9 +142,6 @@ public class RecordStudente {
         return s;
     }
 
-    /**
-     * Restituisce tutti gli studenti presenti nel file.
-     */
     public ArrayList<Studente> leggiTutti() {
         ArrayList<Studente> lista = new ArrayList<>();
         try {
@@ -198,10 +184,6 @@ public class RecordStudente {
         return lista;
     }
 
-    /**
-     * Cerca uno studente per id.
-     * Restituisce la posizione logica del record, oppure -1 se non trovato.
-     */
     public int cercaPerID(String id) {
         int posizioneTrovata = -1;
         String idCercato = aggiustaID(id);
@@ -231,9 +213,6 @@ public class RecordStudente {
         return posizioneTrovata;
     }
 
-    /**
-     * Restituisce il numero totale di record nel file.
-     */
     public int contaRecord() {
         int nRecord = 0;
         try {
