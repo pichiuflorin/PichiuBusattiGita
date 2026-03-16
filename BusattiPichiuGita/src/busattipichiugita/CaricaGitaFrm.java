@@ -188,7 +188,7 @@ public class CaricaGitaFrm extends javax.swing.JFrame {
         for (String idStudente : rr.getStudentiGita(id)) {
             rr.eliminaRecord(idStudente, id);
         }
-        rg.scriviRecordInPosizione(new Gita("00", "***ELIMINATA***", "***"), pos);
+        rg.scriviRecordInPosizione(new Gita("00", "ELIMINATA", "ELIMINATA"), pos);
         txtID.setText("");
         aggiornaLista();
     }//GEN-LAST:event_btnRimuoviActionPerformed

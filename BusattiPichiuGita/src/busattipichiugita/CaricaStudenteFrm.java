@@ -189,7 +189,6 @@ public class CaricaStudenteFrm extends javax.swing.JFrame {
     }//GEN-LAST:event_txtClasseActionPerformed
 
     private void btnAggiungiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAggiungiActionPerformed
-        RecordStudente rs = new RecordStudente();
         String id = txtID.getText().trim();
         String nome = txtNome.getText().trim();
         String cognome = txtCognome.getText().trim();
